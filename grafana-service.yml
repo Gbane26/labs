@@ -1,0 +1,15 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  selector:
+    app: grafana
+  type: LoadBalancer  # Permet l'accès externe
+  ports:
+    - name: http
+      port: 80          
+      targetPort: 3000  
+      protocol: TCP
