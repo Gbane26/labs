@@ -44,5 +44,12 @@ spec:
             port: 8086
           initialDelaySeconds: 10
           periodSeconds: 20
+        volumeMounts:
+          - name: influxdb-storage
+            mountPath: /var/lib/influxdb  # Montage du PVC 
+      volumes:
+        - name: influxdb-storage
+          persistentVolumeClaim:
+            claimName: influxdb-pvc
   
   

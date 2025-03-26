@@ -25,3 +25,13 @@ kubectl apply -f influxdb-ingress.yml
 http://monitoring.192.168.49.2.nip.io
 
 http://influxdb.192.168.49.2.nip.io
+
+
+
+# Vérifiez que les PVC sont bien attachés :
+```kubectl get pvc```
+
+
+# Vérifiez que les volumes sont montés dans les pods :
+kubectl describe pod -l app=influxdb
+kubectl describe pod -l app=grafana

@@ -21,3 +21,10 @@ spec:
         image: grafana/grafana:latest
         ports:
           - containerPort: 3000
+        volumeMounts:
+          - name: grafana-storage
+            mountPath: /var/lib/grafana  # Montage du PVC ici
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-pvc
