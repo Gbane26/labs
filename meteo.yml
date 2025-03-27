@@ -41,3 +41,10 @@ spec:
             value: "8086"
         ports:
           - containerPort: 8125
+        resources:
+          requests:
+            memory: "10Mi"
+            cpu: "50m"  # 0.05 CPU
+          limits:
+            memory: "20Mi"
+            cpu: "100m"  # 0.1 CPU

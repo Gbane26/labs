@@ -47,6 +47,13 @@ spec:
                 key: INFLUXDB_ADMIN_PASSWORD
         ports:
           - containerPort: 8086
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "200m"  # 0.2 CPU
+          limits:
+            memory: "500Mi"
+            cpu: "250m"  # 0.25 CPU
         readinessProbe:
           httpGet:
             path: /health

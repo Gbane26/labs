@@ -20,7 +20,7 @@ spec:
           image: telegraf:latest
           volumeMounts:
             - name: config
-              mountPath: /etc/telegraf/telegraf.conf
+              mountPath: /etc/telegraf
             - name: docker-sock
               mountPath: /var/run/docker.sock
             - name: root
@@ -40,7 +40,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: influxdb-secret
-                  key: INFLUXDB_NAME
+                  key: INFLUXDB_DB
             - name: "INFLUXDB_USER"
               valueFrom:
                 secretKeyRef:
@@ -53,9 +53,8 @@ spec:
                   key: INFLUXDB_PASSWORD
       volumes:
         - name: config
-          hostPath:
-            path: /home/docker/telegraf.conf
-            type: File
+          configMap:
+            name: telegraf-config
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock

@@ -21,6 +21,13 @@ spec:
         image: grafana/grafana:latest
         ports:
           - containerPort: 3000
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"  # 0.1 CPU
+          limits:
+            memory: "200Mi"
+            cpu: "250m"  # 0.25 CPU
         volumeMounts:
           - name: grafana-storage
             mountPath: /var/lib/grafana  # Montage du PVC ici
