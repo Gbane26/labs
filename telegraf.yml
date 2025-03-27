@@ -1,0 +1,71 @@
+---
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: telegraf
+spec:
+  selector:
+    matchLabels:
+      hesias.io/application: grafana
+      hesias.io/type: monitoring
+  template:
+    metadata:
+      labels:
+        hesias.io/application: grafana
+        hesias.io/type: monitoring
+    spec:
+      containers:
+        - name: telegraf
+          image: telegraf:latest
+          volumeMounts:
+            - name: config
+              mountPath: /etc/telegraf/telegraf.conf
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: root
+              mountPath: /hostfs
+              readOnly: true
+#            - name: run-udev
+#              mountPath: /run/udev
+#              readOnly: true
+          env:
+            - name: "HOST_PROC"
+              value: "/hostfs/proc"
+            - name: "INFLUXDB_HOST"
+              value: "influxdb-svc"
+            - name: "INFLUXDB_PORT"
+              value: "8086"
+            - name: "INFLUXDB_NAME"
+              valueFrom:
+                secretKeyRef:
+                  name: influxdb-secret
+                  key: INFLUXDB_NAME
+            - name: "INFLUXDB_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: influxdb-secret
+                  key: INFLUXDB_USER
+            - name: "INFLUXDB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: influxdb-secret
+                  key: INFLUXDB_PASSWORD
+      volumes:
+        - name: config
+          hostPath:
+            path: /home/docker/telegraf.conf
+            type: File
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+        - name: root
+          hostPath:
+            path: /
+            type: Directory
+        - name: run-udev
+          hostPath:
+            path: /run/udev
+            type: Directory
+

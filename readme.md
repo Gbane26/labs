@@ -1,3 +1,5 @@
+# Kubernetes
+
 kubectl apply -f influxdb.yml 
 
 kubectl apply -f grafana.yml 
@@ -32,6 +34,7 @@ http://influxdb.192.168.49.2.nip.io
 ```kubectl get pvc```
 
 
-# Vérifiez que les volumes sont montés dans les pods :
-kubectl describe pod -l app=influxdb
+### Vérifiez que les volumes sont montés dans les pods :
+```kubectl describe pod -l app=influxdb
 kubectl describe pod -l app=grafana
+```

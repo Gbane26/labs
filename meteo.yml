@@ -21,14 +21,23 @@ spec:
         image: pockost/telegraf-cf-weather:arm
         env:
           - name: INFLUXDB_HOST
-            value: "influxdb-service"
+            value: "influxdb"
+          - name: INFLUXDB_USER
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_USER
+          - name: INFLUXDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_PASSWORD
+          - name: INFLUXDB_DB
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_DB
           - name: INFLUXDB_PORT
             value: "8086"
-          - name: INFLUXDB_USER
-            value: "influxuser"
-          - name: INFLUXDB_PASSWORD
-            value: "influxpassword"
-          - name: INFLUXDB_NAME
-            value: "mydatabase"
         ports:
           - containerPort: 8125

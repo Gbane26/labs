@@ -21,15 +21,30 @@ spec:
         image: influxdb:1.8
         env:
           - name: INFLUXDB_DB
-            value: "mydatabase"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_DB
           - name: INFLUXDB_USER
-            value: "influxuser"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_USER
           - name: INFLUXDB_USER_PASSWORD
-            value: "influxpassword"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_PASSWORD
           - name: INFLUXDB_ADMIN_USER
-            value: "admin"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_ADMIN_USER
           - name: INFLUXDB_ADMIN_PASSWORD
-            value: "adminpassword"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-secret
+                key: INFLUXDB_ADMIN_PASSWORD
         ports:
           - containerPort: 8086
         readinessProbe:
